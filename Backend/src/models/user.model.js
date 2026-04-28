@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     unique: [true, "Account is already with this email address"],
     required: true,
   }
-});
+}, { timestamps: true });
 
 const userModel = mongoose.model("user", userSchema)
 
