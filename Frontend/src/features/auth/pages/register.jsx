@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router'
+import { useAuth } from '../hooks/useAuth'
 
 const register = () => {
 
   const navigate = useNavigate()
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
 
-  const handleSubmit = (e) => {
+  const {loading, handleRegister} = useAuth()
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Handle registration logic here
+
+    await handleRegister({username, email, password})
+    navigate('/')
   }
 
   return (
@@ -19,17 +28,19 @@ const register = () => {
 
           <div className="input-group">
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username" required placeholder='Enter username'/>
+            <input
+            onChange={(e)=>{setUsername(e.target.value)}} type="text" id="username" name="username" required placeholder='Enter username'/>
           </div>
 
           <div className="input-group">
             <label htmlFor="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder='Enter email address'/>
+            <input 
+            onChange={(e)=>{setEmail(e.target.value)}} type="email" id="email" name="email" required placeholder='Enter email address'/>
           </div>
 
           <div className="input-group">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" required placeholder='Enter password'/>
+            <input onChange={(e)=>{setPassword(e.target.value)}} type="password" id="password" name="password" required placeholder='Enter password'/>
           </div>
 
           <button className='button primary-button'>Register</button>
